@@ -1,0 +1,2 @@
+# Copy this file to config.py and add your actual API key
+REED_API_KEY = "YOUR_REED_API_KEY_HERE"

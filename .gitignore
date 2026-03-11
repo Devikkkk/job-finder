@@ -8,6 +8,7 @@ __pycache__/
 Thumbs.db
 
 # Project
+config.py
 proxy_server.py.bak
 app.jsx.bak
 index.html.bak

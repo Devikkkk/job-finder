@@ -3,9 +3,9 @@ import socketserver
 import urllib.request
 import urllib.error
 import base64
+from config import REED_API_KEY
 
 PORT = 8080
-REED_API_KEY = "5b56acde-52c1-452e-bbfc-7b9c780cddd5"
 REED_AUTH = f"Basic {base64.b64encode(f'{REED_API_KEY}:'.encode()).decode()}"
 
 class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
