@@ -2,8 +2,11 @@ import http.server
 import socketserver
 import urllib.request
 import urllib.error
+import base64
 
 PORT = 8080
+REED_API_KEY = "5b56acde-52c1-452e-bbfc-7b9c780cddd5"
+REED_AUTH = f"Basic {base64.b64encode(f'{REED_API_KEY}:'.encode()).decode()}"
 
 class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
@@ -16,10 +19,8 @@ class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             reed_path = self.path.replace('/api/reed/', 'https://www.reed.co.uk/api/1.0/')
             
             req = urllib.request.Request(reed_path)
-            # We need the authorization header
-            auth_header = self.headers.get('Authorization')
-            if auth_header:
-                req.add_header('Authorization', auth_header)
+            # Inject the Reed Auth header server-side
+            req.add_header('Authorization', REED_AUTH)
                 
             try:
                 with urllib.request.urlopen(req) as response:

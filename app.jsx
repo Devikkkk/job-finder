@@ -1,7 +1,5 @@
 const { useState, useCallback, useRef } = React;
 
-const REED_API_KEY = "5b56acde-52c1-452e-bbfc-7b9c780cddd5";
-
 const RESUME = {
   name: "Devik Satya Venkat Balabhadruni",
   title: "Data Analyst | Python · SQL · Power BI | NLP & AI Automation",
@@ -104,8 +102,7 @@ function App() {
       setProgress(Math.round((i / KEYWORDS.length) * 55));
       try {
         const r = await fetch(
-          `/api/reed/search?keywords=${encodeURIComponent(kw)}&locationName=uk&resultsToTake=10`,
-          { headers: { Authorization: "Basic " + btoa(REED_API_KEY + ":") } }
+          `/api/reed/search?keywords=${encodeURIComponent(kw)}&locationName=uk&resultsToTake=10`
         );
         if (!r.ok) { log(`⚠ ${kw}: HTTP ${r.status}`); continue; }
         const d = await r.json();
@@ -118,8 +115,7 @@ function App() {
     for (let i = 0; i < top.length; i++) {
       setProgress(55 + Math.round((i / top.length) * 40));
       try {
-        const r = await fetch(`/api/reed/jobs/${top[i].jobId}`,
-          { headers: { Authorization: "Basic " + btoa(REED_API_KEY + ":") } });
+        const r = await fetch(`/api/reed/jobs/${top[i].jobId}`);
         detailed.push(r.ok ? { ...top[i], ...(await r.json()) } : top[i]);
       } catch { detailed.push(top[i]); }
     }
